@@ -1,6 +1,7 @@
 import socket
 
 import scapy.utils
+from scapy.all import IP, Ether
 
 IPPROTO_DIVERT = 258
 DIVERT_PORT = 700
@@ -12,5 +13,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_RAW, IPPROTO_DIVERT) as sock:
         while True:
             data, peer = sock.recvfrom(2048)
             print("received %d bytes" % len(data))
-            writer.write(data)
+            eth = Ether()/IP(data)
+            writer.write(eth)
             sock.sendto(data, peer)
