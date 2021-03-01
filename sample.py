@@ -11,6 +11,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_RAW, IPPROTO_DIVERT) as sock:
     with scapy.utils.PcapWriter(PCAP_FILE) as writer:
         while True:
             data, peer = sock.recvfrom(2048)
-            print("received %d bytes from %s" % (len(data), str(peer)))
+            print("received %d bytes" % len(data))
             writer.write(data)
             sock.sendto(data, peer)
